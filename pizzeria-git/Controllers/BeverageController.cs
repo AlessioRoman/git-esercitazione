@@ -1,59 +1,59 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LaMiaPizzeriaRefactoring.Database;
+using LaMiaPizzeriaRefactoring.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace pizzeria_git.Controllers
 {
     public class BeverageController : Controller
     {
-        public class PizzaController : Controller
+        public IActionResult Index()
         {
-            //public IActionResult Index()
-            //{
-            //    using (BeverageController db = new())
-            //    {
-            //        List<BeverageController> pizze = db.Pizzas.ToList();
-            //        return View(pizze);
-            //    }
-            //}
+            using (PizzaContext db = new())
+            {
+                List<BeverageModel> bevande = db.Beverages.ToList();
+                return View(bevande);
+            }
+        }
 
-            //[HttpGet]
-            //public IActionResult Create()
-            //{
-            //    return View();
-            //}
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-            //[HttpPost]
-            //[ValidateAntiForgeryToken]
-            //public IActionResult Create(PizzaModel newPizza)
-            //{
-            //    if (!ModelState.IsValid)
-            //    {
-            //        return View("Create", newPizza);
-            //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(BeverageModel newBev)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Create", newBev);
+            }
 
-            //    using (PizzaContext db = new())
-            //    {
-            //        db.Pizzas.Add(newPizza);
-            //        db.SaveChanges();
+            using (PizzaContext db = new())
+            {
+                db.Beverages.Add(newBev);
+                db.SaveChanges();
 
-            //        return RedirectToAction("Index");
-            //    }
-            //}
+                return RedirectToAction("Index");
+            }
+        }
 
-            //public IActionResult Details(int id)
-            //{
-            //    using (PizzaContext db = new())
-            //    {
-            //        PizzaModel? pizzaDetails = db.Pizzas.Where(PizzaModel => PizzaModel.Id == id).FirstOrDefault();
+        public IActionResult Details(int id)
+        {
+            using (PizzaContext db = new())
+            {
+                BeverageModel? bevDetails = db.Beverages.Where(BeverageModel => BeverageModel.Id == id).FirstOrDefault();
 
-            //        if (pizzaDetails != null)
-            //        {
-            //            return View("Details", pizzaDetails);
-            //        }
-            //        else
-            //        {
-            //            return NotFound($"L'articolo con id {id} non è stato trovato!");
-            //        }
-            //    }
+                if (bevDetails != null)
+                {
+                    return View("Details", bevDetails);
+                }
+                else
+                {
+                    return NotFound($"L'articolo con id {id} non è stato trovato!");
+                }
+            }
         }
     }
 }
