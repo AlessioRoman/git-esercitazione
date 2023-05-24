@@ -1,5 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+	Layout = "_LayoutNoFooter";
 }
+
+@model BeverageModel
+
+<div class="w-50 m-auto my-8 flex flex-col items-center gap-5">
+	<h1 class="text-4xl text-redText font-bold">@Model.Name</h1>
+	<img src="@Model.ImageUrl" class="rounded" style="width: 25rem;" />
+	<p class="text-center text-xl">@Model.Description</p>
+	<h3 class="text-2xl font-bold">@Model.Price &euro;</h3>
+</div>
